@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-import {MainMenuComponent} from './pages/main-menu/main-menu.component';
 import {LoginComponent} from './pages/authentication/login/login.component';
+import {HomeComponent} from './pages/home/home.component';
+import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
-  { path: '', component: MainMenuComponent },
-  { path: 'login', component: LoginComponent }
+  { path: '',  redirectTo: '/login', pathMatch: 'full'},
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

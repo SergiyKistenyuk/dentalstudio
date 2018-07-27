@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Route, Router} from "@angular/router";
 
 @Component({
-  selector: 'ngc-login',
+  selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -17,6 +17,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.router.navigate(['']);
+    this.router.navigate(['/home']);
   }
 }

@@ -1,36 +1,37 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {MainMenuComponent} from './components/main-menu/main-menu.component';
 import {MaterialModule} from './modules/material.module';
-import {LoginComponent} from './pages/authentication/login/login.component';
-import {AppRoutingModule} from './app-routing.module';
-import {ProfileComponent} from './components/profile/profile.component';
+import {AppRoutingModule} from './modules/app-routing.module';
+import {UserProfileComponent} from './components/user-profile/user-profile.component';
 import {HomeComponent} from './pages/home/home.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
+import {AuthModule} from './modules/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     HomeComponent,
     MainMenuComponent,
-    ProfileComponent,
+    UserProfileComponent,
     PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

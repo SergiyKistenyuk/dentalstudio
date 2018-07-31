@@ -46,7 +46,7 @@ export class IndexedDbService implements IDataProviderService {
         for (let i = 0; i < records.length; i++) {
           store.put({ id: records[i].id, obj: records[i] });
         }
-        resolve();
+        resolve(records);
       });
     });
   }
@@ -99,7 +99,7 @@ export class IndexedDbService implements IDataProviderService {
     return new Promise((resolve, reject) => {
       this.performOperationWithStore(name, function (tx, store) {
         store.put({ id: object.id, obj: object });
-        resolve();
+        resolve(object);
       });
     });
   }
@@ -108,7 +108,7 @@ export class IndexedDbService implements IDataProviderService {
     return new Promise((resolve, reject) => {
       this.performOperationWithStore(name, function (tx, store) {
         store.delete(object.id);
-        resolve();
+        resolve(object);
       });
     });
   }
@@ -117,7 +117,7 @@ export class IndexedDbService implements IDataProviderService {
     return new Promise((resolve, reject) => {
       this.performOperationWithStore(name, function (tx, store) {
         store.put({ id: object.id, obj: object });
-        resolve();
+        resolve(object);
       });
     });
   }

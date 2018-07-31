@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {PatientService} from '../../services/patient.service';
 import {Patient} from '../../models/patient.model';
 import {DentistService} from '../../services/dentist.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-signup',
@@ -15,20 +16,24 @@ import {DentistService} from '../../services/dentist.service';
 })
 export class SignupComponent implements OnInit, OnDestroy {
 
-  user = new User;
+  user = new User();
+  // user: User = {role: Roles.PATIENT};
+  // user: User = {role: Roles.DENTIST};
   hidePassword = true;
-  Roles = [Roles.PATIENT, Roles.DENTIST, Roles.NURSE, Roles.ADMIN];
+  userRoles = [Roles.PATIENT, Roles.DENTIST, Roles.NURSE, Roles.ADMIN];
+  readonly Roles = Roles;
   signupFormGroup: FormGroup;
   subscriptions: Subscription[] = [];
   birthDate: any;
 
   constructor(private formBuilder: FormBuilder,
               private patientService: PatientService,
-              private dentistService: DentistService) {
+              public dentistService: DentistService,
+              public snackBar: MatSnackBar) {
     this.signupFormGroup = this.formBuilder.group({
       firstNameCtrl: ['', Validators.required],
       lastNameCtrl: ['', Validators.required],
-      emailCtrl: ['', Validators.required],
+      emailCtrl: ['', Validators.required, Validators.email],
       phoneCtrl: ['', Validators.required],
       passwordCtrl: ['', Validators.required],
       roleCtrl: ['', Validators.required],
@@ -49,20 +54,29 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSignup() {
-    // debugger;
-    this.patientService.addCollection(this.patientService.mockPatients);
-    this.dentistService.addCollection(this.dentistService.mockDentists);
-    // this.patientService.addObject(<Patient>this.user)
-    //   .then((item) => {
-    //     debugger;
-    //   })
-    //   .catch((error) => {
-    //     debugger;
-    //   });
+    this.patientService.addObject(<User>this.user)
+      .then((item) => {
+        debugger;
+        this.snackBar.open('User data was saved!', '', {duration: 2000,});
+
+      })
+      .catch((error) => {
+        debugger;
+      });
+  }
+
+  onSaveMockUsers() {
+    this.dentistService.addCollection(this.patientService.mockPatients.concat(this.dentistService.mockDentists))
+      .then((items) => {
+        debugger;
+      })
+      .catch((error) => {
+        debugger;
+      });
   }
 
   onGetUser() {
-    this.patientService.getObject(this.user.id)
+    this.patientService.getObject((<User>this.user).id)
       .then((item) => {
         debugger;
       })

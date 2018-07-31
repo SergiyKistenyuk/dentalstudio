@@ -9,6 +9,6 @@ import {Admin} from '../models/admin.model';
 })
 export class AdminService extends BaseDataService<Admin> {
   constructor(protected dataProviderService: IndexedDbService) {
-    super('dentists', dataProviderService);
+    super('users', dataProviderService);
   }
 }

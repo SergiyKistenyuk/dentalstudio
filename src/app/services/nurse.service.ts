@@ -9,6 +9,6 @@ import {Nurse} from '../models/nurse.model';
 })
 export class NurseService extends BaseDataService<Nurse> {
   constructor(protected dataProviderService: IndexedDbService) {
-    super('dentists', dataProviderService);
+    super('users', dataProviderService);
   }
 }

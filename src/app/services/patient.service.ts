@@ -16,6 +16,6 @@ export class PatientService extends BaseDataService<Patient> {
   ];
 
   constructor(protected dataProviderService: IndexedDbService) {
-    super('dentists', dataProviderService);
+    super('users', dataProviderService);
   }
 }

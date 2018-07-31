@@ -13,6 +13,12 @@ import {UserProfileComponent} from './components/user-profile/user-profile.compo
 import {HomeComponent} from './pages/home/home.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {AuthModule} from './modules/auth.module';
+import {IndexedDbService} from './services/indexed-DB.service';
+import {BaseDataService} from './services/base.service';
+import {PatientService} from './services/patient.service';
+import {DentistService} from './services/dentist.service';
+import {NurseService} from './services/nurse.service';
+import {AdminService} from './services/admin.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,13 @@ import {AuthModule} from './modules/auth.module';
     MaterialModule,
     AuthModule
   ],
-  providers: [],
+  providers: [
+    IndexedDbService,
+    PatientService,
+    DentistService,
+    NurseService,
+    AdminService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

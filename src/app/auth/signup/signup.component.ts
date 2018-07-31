@@ -4,7 +4,13 @@ import {User} from '../../models/user.model';
 import {Roles} from '../../models/roles.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {DBService} from '../../services/DB.service';
+import {PatientService} from '../../services/patient.service';
+import {Patient} from '../../models/patient.model';
+import {NurseService} from '../../services/nurse.service';
+import {AdminService} from '../../services/admin.service';
+import {BaseDataService} from '../../services/base.service';
+import {IndexedDbService} from '../../services/indexed-DB.service';
+import {DentistService} from '../../services/dentist.service';
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +26,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(private formBuilder: FormBuilder,
-              private DBService: DBService) {
+              private patientService: PatientService) {
     this.signupFormGroup = this.formBuilder.group({
       firstNameCtrl: ['', Validators.required],
       lastNameCtrl: ['', Validators.required],
@@ -45,32 +51,44 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   onSignup() {
     debugger;
-    this.subscriptions.push(this.DBService.add(this.user)
-      .subscribe((user: User) => {
+    this.patientService.addObject(<Patient>this.user)
+      .then((item) => {
         debugger;
-      }));
+      })
+      .catch((error) => {
+        debugger;
+      });
   }
 
   onGetUser() {
-    this.subscriptions.push(this.DBService.get(this.user.role, '1')
-      .subscribe((user: User) => {
+    this.patientService.getObject(this.user.id)
+      .then((item) => {
         debugger;
-      }));
+      })
+      .catch((error) => {
+        debugger;
+      });
   }
 
   onGetUsers() {
-    this.subscriptions.push(this.DBService.getAll(this.user.role)
-      .subscribe((users: User[]) => {
+    this.patientService.getItems()
+      .then((items) => {
         debugger;
-      }));
+      })
+      .catch((error) => {
+        debugger;
+      });
   }
 
 
   onUpdateUser() {
-    this.subscriptions.push(this.DBService.update(this.user.role, '1')
-      .subscribe((user: User) => {
+    this.patientService.updateObject(<Patient>this.user)
+      .then((item) => {
         debugger;
-      }));
+      })
+      .catch((error) => {
+        debugger;
+      });
   }
 
   ngOnDestroy() {

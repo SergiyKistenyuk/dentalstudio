@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
               private dentistService: DentistService) {}
 
   ngOnInit() {
-    this.patientService.addCollection(this.patientService.mockPatients);
-    this.dentistService.addCollection(this.dentistService.mockDentists);
+    // this.patientService.addCollection(this.patientService.mockPatients);
+    // this.dentistService.addCollection(this.dentistService.mockDentists);
   }
 }

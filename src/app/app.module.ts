@@ -14,7 +14,6 @@ import {HomeComponent} from './pages/home/home.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {AuthModule} from './modules/auth.module';
 import {IndexedDbService} from './services/indexed-DB.service';
-import {BaseDataService} from './services/base.service';
 import {PatientService} from './services/patient.service';
 import {DentistService} from './services/dentist.service';
 import {NurseService} from './services/nurse.service';

@@ -116,8 +116,23 @@
     </mat-form-field>
   </ng-template>
 
+  <mat-form-field>
+    <input matInput
+           [(ngModel)]="birthDate"
+           [matDatepicker]="picker"
+           placeholder="Choose a date"
+           formControlName="birthDateCtrl"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <p>Date without Pipe: {{birthDate}}</p>
+  <p>Date with Pipe: {{birthDate | date: 'shortDate'}}</p>
+  <p>Date with build-in Pipe and Custom Pipe: {{birthDate | date: 'shortDate' | customDate}}</p>
+
   <button mat-raised-button color="primary" (click)="onSignup()">Sign Up</button>
 </form>
-<button mat-raised-button color="primary" (click)="onGetUser()">Get user</button>
-<button mat-raised-button color="primary" (click)="onGetUsers()">Get users</button>
-<button mat-raised-button color="primary" (click)="onUpdateUser()">Update user</button>
+<!--<button mat-raised-button color="primary" (click)="onGetUser()">Get user</button>-->
+<!--<button mat-raised-button color="primary" (click)="onGetUsers()">Get users</button>-->
+<!--<button mat-raised-button color="primary" (click)="onUpdateUser()">Update user</button>-->

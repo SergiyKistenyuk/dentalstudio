@@ -6,10 +6,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {PatientService} from '../../services/patient.service';
 import {Patient} from '../../models/patient.model';
-import {NurseService} from '../../services/nurse.service';
-import {AdminService} from '../../services/admin.service';
-import {BaseDataService} from '../../services/base.service';
-import {IndexedDbService} from '../../services/indexed-DB.service';
 import {DentistService} from '../../services/dentist.service';
 
 @Component({
@@ -24,9 +20,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   Roles = [Roles.PATIENT, Roles.DENTIST, Roles.NURSE, Roles.ADMIN];
   signupFormGroup: FormGroup;
   subscriptions: Subscription[] = [];
+  birthDate: any;
 
   constructor(private formBuilder: FormBuilder,
-              private patientService: PatientService) {
+              private patientService: PatientService,
+              private dentistService: DentistService) {
     this.signupFormGroup = this.formBuilder.group({
       firstNameCtrl: ['', Validators.required],
       lastNameCtrl: ['', Validators.required],
@@ -37,7 +35,8 @@ export class SignupComponent implements OnInit, OnDestroy {
       dentistCtrl: [''],
       workExperienceCtrl: [''],
       awardsCtrl: [''],
-      skillsCtrl: ['']
+      skillsCtrl: [''],
+      birthDateCtrl: ['']
     });
   }
 
@@ -50,14 +49,16 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSignup() {
-    debugger;
-    this.patientService.addObject(<Patient>this.user)
-      .then((item) => {
-        debugger;
-      })
-      .catch((error) => {
-        debugger;
-      });
+    // debugger;
+    this.patientService.addCollection(this.patientService.mockPatients);
+    this.dentistService.addCollection(this.dentistService.mockDentists);
+    // this.patientService.addObject(<Patient>this.user)
+    //   .then((item) => {
+    //     debugger;
+    //   })
+    //   .catch((error) => {
+    //     debugger;
+    //   });
   }
 
   onGetUser() {

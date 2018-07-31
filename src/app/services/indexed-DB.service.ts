@@ -25,7 +25,7 @@ export class IndexedDbService implements IDataProviderService {
     const open = indexedDB.open('MyDataBase', 1);
     open.onupgradeneeded = function () {
       const db = open.result;
-      db.createObjectStore('users', { keyPath: 'id' });
+      db.createObjectStore(name, { keyPath: 'id' });
     };
     open.onsuccess = function () {
       // Start a new transaction

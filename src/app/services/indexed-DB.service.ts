@@ -41,12 +41,41 @@ export class IndexedDbService implements IDataProviderService {
   }
 
   public addCollection(name, records): Promise<any> {
+    const service = this;
+    return new Promise((resolve, reject) => {
+      for (let i = 0; i < records.length; i++) {
+        this.performOperationWithStore(name, function (tx, store) {
+          service.getLastId(name).then(lastId => {
+            records[i].id = i;
+            store.put({ id: records[i].id, obj: records[i] });
+            if (i === records.length - 1) {
+              resolve(records);
+            }
+          });
+        });
+      }
+    });
+  }
+
+  private getLastId(name): Promise<number> {
     return new Promise((resolve, reject) => {
       this.performOperationWithStore(name, function (tx, store) {
-        for (let i = 0; i < records.length; i++) {
-          store.put({ id: records[i].id, obj: records[i] });
-        }
-        resolve(records);
+        const cursorRequest = store.openCursor();
+        cursorRequest.onerror = function (error) {
+          reject(error);
+        };
+        let lastKey = -1;
+        cursorRequest.onsuccess = function (evt) {
+          const cursor = evt.target.result;
+          if (cursor) {
+            if (cursor.key > lastKey) {
+              lastKey = cursor.key;
+            }
+            cursor.continue();
+          } else {
+            resolve(lastKey);
+          }
+        };
       });
     });
   }

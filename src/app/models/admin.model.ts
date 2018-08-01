@@ -6,7 +6,7 @@ export class Admin extends User {
     public role: Roles = Roles.ADMIN,
     public email: string = '',
     public password: string = '',
-    public id: string = ''
+    public id: number = null
   ) {
     super();
   }

@@ -33,7 +33,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this.signupFormGroup = this.formBuilder.group({
       firstNameCtrl: ['', Validators.required],
       lastNameCtrl: ['', Validators.required],
-      emailCtrl: ['', Validators.required, Validators.email],
+      emailCtrl: ['', Validators.required],
       phoneCtrl: ['', Validators.required],
       passwordCtrl: ['', Validators.required],
       roleCtrl: ['', Validators.required],
@@ -66,6 +66,14 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   onSaveMockUsers() {
+    this.dentistService.addCollection(this.patientService.mockPatients.concat(this.dentistService.mockDentists))
+      .then((items) => {
+        debugger;
+      })
+      .catch((error) => {
+        debugger;
+      });
+
     this.dentistService.addCollection(this.patientService.mockPatients.concat(this.dentistService.mockDentists))
       .then((items) => {
         debugger;

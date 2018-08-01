@@ -13,7 +13,7 @@ export class Nurse extends User {
     public phone: string = '',
     public password: string = '',
     public birthDay: Date = null,
-    public id: string = '') {
+    public id: number = null) {
     super();
   }
 }

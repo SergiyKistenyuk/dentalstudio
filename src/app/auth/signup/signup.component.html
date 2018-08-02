@@ -1,0 +1,141 @@
+<form [formGroup]="signupFormGroup">
+
+  <!--<div *ngIf="user.role != Roles.ADMIN">-->
+    <mat-form-field *ngIf="user.role != Roles.ADMIN">
+      <input matInput
+             placeholder="First name"
+             [(ngModel)]="user.firstName"
+             formControlName="firstNameCtrl"
+             autofocus
+             required>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="user.role != Roles.ADMIN">
+      <input matInput
+             placeholder="Last name"
+             [(ngModel)]="user.lastName"
+             formControlName="lastNameCtrl"
+             required>
+    </mat-form-field>
+  <!--</div>-->
+
+  <!--<div>-->
+    <mat-form-field>
+      <input matInput
+             placeholder="Email address"
+             [(ngModel)]="user.email"
+             formControlName="emailCtrl"
+             required>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="user.role != Roles.ADMIN">
+      <input matInput
+             placeholder="Phone"
+             type="number"
+             [(ngModel)]="user.phone"
+             formControlName="phoneCtrl"
+             required>
+      <span matPrefix>+380 &nbsp;</span>
+      <mat-icon matSuffix>phone</mat-icon>
+    </mat-form-field>
+  <!--</div>-->
+
+  <!--<div>-->
+    <mat-form-field>
+      <input matInput
+             placeholder="Password"
+             [(ngModel)]="user.password"
+             [type]="hidePassword ? 'password' : 'text'"
+             formControlName="passwordCtrl"
+             required>
+      <mat-icon matSuffix
+                class="hide-password-icon"
+                (click)="hidePassword = !hidePassword"
+      >
+        {{hidePassword ? 'visibility' : 'visibility_off'}}
+      </mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="User type"
+                  [(ngModel)]="user.role"
+                  formControlName="roleCtrl"
+                  required>
+        <mat-option *ngFor="let role of userRoles" [value]="role">
+          {{role}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  <!--</div>-->
+
+  <div *ngIf="user.role == Roles.PATIENT; then patient"></div>
+  <div *ngIf="user.role == Roles.DENTIST || user.role == Roles.NURSE; then dentistOrNurse"></div>
+
+  <ng-template #patient>
+    <mat-form-field *ngIf="user.role == Roles.PATIENT">
+      <mat-select placeholder="Your dentist"
+                  [(ngModel)]="user.currentDentistId"
+                  formControlName="dentistCtrl"
+                  >
+        <mat-option *ngFor="let dentist of dentistService.mockDentists" [value]="dentist.id">
+          {{dentist.firstName}} &nbsp; {{dentist.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+
+  <ng-template #dentistOrNurse>
+    <!--<div *ngIf="user.role == Roles.DENTIST || user.role == Roles.NURSE">-->
+      <mat-form-field *ngIf="user.role == Roles.DENTIST || user.role == Roles.NURSE">
+        <input matInput
+               type="number"
+               placeholder="Work Experience"
+               [(ngModel)]="user.workExperience"
+               formControlName="workExperienceCtrl"
+        >
+      </mat-form-field>
+
+      <mat-form-field *ngIf="user.role == Roles.DENTIST || user.role == Roles.NURSE">
+        <textarea matInput
+                  rows="1"
+                  placeholder="Awards"
+                  [(ngModel)]="user.awards"
+                  formControlName="awardsCtrl"
+        >
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="user.role == Roles.DENTIST || user.role == Roles.NURSE">
+        <textarea matInput
+                  rows="1"
+                  placeholder="Skills"
+                  [(ngModel)]="user.skills"
+                  formControlName="skillsCtrl"
+        >
+        </textarea>
+      </mat-form-field>
+    <!--</div>-->
+  </ng-template>
+
+  <mat-form-field *ngIf="user.role != Roles.ADMIN">
+    <input matInput
+           [(ngModel)]="birthDate"
+           [matDatepicker]="picker"
+           placeholder="Choose a date of birth"
+           formControlName="birthDateCtrl"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <!--<p>Date without Pipe: {{birthDate}}</p>-->
+  <!--<p>Date with Pipe: {{birthDate | date: 'shortDate'}}</p>-->
+  <!--<p>Date with build-in Pipe and Custom Pipe: {{birthDate | date: 'shortDate' | customDate}}</p>-->
+
+  <button mat-raised-button color="primary" (click)="onSignup()">Sign Up</button>
+</form>
+<button mat-raised-button color="primary" (click)="onSaveMockUsers()">Save Mock Users</button>
+<button mat-raised-button color="primary" (click)="onGetUser()">Get user</button>
+<button mat-raised-button color="primary" (click)="onGetUsers()">Get users</button>
+<button mat-raised-button color="primary" (click)="onUpdateUser()">Update user</button>
+

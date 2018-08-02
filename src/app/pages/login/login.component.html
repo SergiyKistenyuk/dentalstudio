@@ -1,0 +1,21 @@
+<form [formGroup]="loginFormGroup">
+  <h1>Sign In</h1>
+  <mat-form-field>
+    <input matInput
+           placeholder="Email address"
+           type="email"
+           formControlName="emailCtrl"
+           autofocus
+           required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+           placeholder="Password"
+           type="password"
+           required>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="login()">Sign in</button>
+</form>
+
+

@@ -1,0 +1,21 @@
+<form>
+  <h1>Sign In</h1>
+  <mat-form-field>
+    <input matInput
+           placeholder="User name"
+           [ngModel]="username"
+           autofocus
+           required>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput
+           placeholder="Password"
+           [type]="password"
+           [ngModel]="password"
+           required>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="login()">Sign in</button>
+</form>
+
+

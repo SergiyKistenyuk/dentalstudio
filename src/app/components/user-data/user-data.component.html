@@ -1,0 +1,116 @@
+<form [formGroup]="userDataFormGroup">
+
+  <mat-form-field *ngIf="userDataFormGroup.value.role != Roles.ADMIN">
+    <input matInput
+           placeholder="First name"
+           formControlName="firstName"
+           autofocus
+           required>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="userDataFormGroup.value.role != Roles.ADMIN">
+    <input matInput
+           placeholder="Last name"
+           formControlName="lastName"
+           required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           placeholder="Email address"
+           formControlName="email"
+           required>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="userDataFormGroup.value.role != Roles.ADMIN">
+    <input matInput
+           placeholder="Phone"
+           type="number"
+           formControlName="phone"
+           required>
+    <span matPrefix>+380 &nbsp;</span>
+    <mat-icon matSuffix>phone</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           placeholder="Password"
+           [type]="hidePassword ? 'password' : 'text'"
+           formControlName="password"
+           required>
+    <mat-icon matSuffix
+              class="hide-password-icon"
+              (click)="hidePassword = !hidePassword"
+    >
+      {{hidePassword ? 'visibility' : 'visibility_off'}}
+    </mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select placeholder="User type"
+                formControlName="role"
+                required>
+      <mat-option *ngFor="let role of userRoles" [value]="role">
+        {{role}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div *ngIf="userDataFormGroup.value.role == Roles.PATIENT; then patient"></div>
+  <div *ngIf="userDataFormGroup.value.role == Roles.DENTIST || userDataFormGroup.value.role == Roles.NURSE; then dentistOrNurse"></div>
+
+  <ng-template #patient>
+    <mat-form-field *ngIf="userDataFormGroup.value.role == Roles.PATIENT">
+      <mat-select placeholder="Your dentist"
+                  formControlName="dentist"
+      >
+        <mat-option *ngFor="let dentist of dentists" [value]="dentist.id">
+          {{dentist.firstName}} {{dentist.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-template>
+
+  <ng-template #dentistOrNurse>
+    <mat-form-field *ngIf="userDataFormGroup.value.role == Roles.DENTIST || userDataFormGroup.value.role == Roles.NURSE">
+      <input matInput
+             type="number"
+             placeholder="Work Experience"
+             formControlName="workExperience"
+      >
+    </mat-form-field>
+
+    <mat-form-field *ngIf="userDataFormGroup.value.role == Roles.DENTIST || userDataFormGroup.value.role == Roles.NURSE">
+        <textarea matInput
+                  rows="1"
+                  placeholder="Awards"
+                  formControlName="awards"
+        >
+        </textarea>
+    </mat-form-field>
+
+    <mat-form-field *ngIf="userDataFormGroup.value.role == Roles.DENTIST || userDataFormGroup.value.role == Roles.NURSE">
+        <textarea matInput
+                  rows="1"
+                  placeholder="Skills"
+                  formControlName="skills"
+        >
+        </textarea>
+    </mat-form-field>
+  </ng-template>
+
+  <mat-form-field *ngIf="userDataFormGroup.value.role != Roles.ADMIN">
+    <input matInput
+           [matDatepicker]="picker"
+           placeholder="Choose a date of birth"
+           formControlName="birthDate"
+    >
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <!--<p>Date without Pipe: {{birthDate}}</p>-->
+  <!--<p>Date with Pipe: {{birthDate | date: 'shortDate'}}</p>-->
+  <!--<p>Date with build-in Pipe and Custom Pipe: {{birthDate | date: 'shortDate' | customDate}}</p>-->
+</form>
+

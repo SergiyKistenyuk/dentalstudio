@@ -1,17 +1,17 @@
-<form>
+<form [formGroup]="loginFormGroup">
   <h1>Sign In</h1>
   <mat-form-field>
     <input matInput
-           placeholder="User name"
-           [ngModel]="username"
+           placeholder="Email address"
+           type="email"
+           formControlName="emailCtrl"
            autofocus
            required>
   </mat-form-field>
   <mat-form-field>
     <input matInput
            placeholder="Password"
-           [type]="password"
-           [ngModel]="password"
+           type="password"
            required>
   </mat-form-field>
 

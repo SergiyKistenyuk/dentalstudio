@@ -81,7 +81,6 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
-    MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,

@@ -1,1 +1,18 @@
-<app-main-menu></app-main-menu>
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="toolbar">
+    <span>
+      <app-main-menu *ngIf="currentUser"
+                     [currentUser]="currentUser">
+      </app-main-menu>
+    </span>
+
+
+    <span>
+      <app-auth-menu *ngIf="!currentUser"></app-auth-menu>
+      <app-user-menu *ngIf="currentUser"
+                     [currentUser]="currentUser"></app-user-menu>
+    </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+

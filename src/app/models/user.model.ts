@@ -16,6 +16,6 @@ export class User {
     public awards: string = '',
     public skills: string = '',
     public birthDay: Date = null,
-    public id: string = ''
+    public id: number = null
   ) {}
 }

@@ -8,14 +8,32 @@ import {DentistService} from './services/dentist.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'dentalstudio';
 
   constructor(private patientService: PatientService,
-              private dentistService: DentistService) {}
+              private dentistService: DentistService) {
+  }
 
   ngOnInit() {
-    // this.patientService.addCollection(this.patientService.mockPatients);
-    // this.dentistService.addCollection(this.dentistService.mockDentists);
+    // this.dentistService.clear()
+    //   .then((reponse) => {
+    //     this.dentistService.addCollection(this.patientService.mockPatients.concat(this.dentistService.mockDentists))
+    //       .then((items) => {
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    this.dentistService.addCollection(this.patientService.mockPatients.concat(this.dentistService.mockDentists))
+      .then((items) => {
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }

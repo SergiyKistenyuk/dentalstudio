@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from '../../models/user.model';
+import {Roles} from '../../models/roles.model';
 
 @Component({
   selector: 'app-main-menu',
@@ -6,6 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-menu.component.scss']
 })
 export class MainMenuComponent implements OnInit {
+
+  @Input() currentUser: User;
+
+  readonly Roles = Roles;
 
   constructor() { }
 

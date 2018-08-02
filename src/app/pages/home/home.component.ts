@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {LocalStorageService} from '../../services/local-storage.service';
+import {User} from '../../models/user.model';
+import {Roles} from '../../models/roles.model';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  currentUser: User;
+  readonly Roles = Roles;
+
+  constructor(private localStorageService: LocalStorageService) { }
 
   ngOnInit() {
+    this.currentUser = this.localStorageService.get('currentUser');
   }
-
 }

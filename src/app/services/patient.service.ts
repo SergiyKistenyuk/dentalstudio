@@ -5,9 +5,7 @@ import {BaseDataService} from './base.service';
 import {IndexedDbService} from './indexed-DB.service';
 import {Roles} from '../models/roles.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PatientService extends BaseDataService<Patient> {
 
   mockPatients = [

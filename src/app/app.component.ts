@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 
-import {PatientService} from './services/patient.service';
-import {DentistService} from './services/dentist.service';
+import {ApiService} from './services/api.service';
+import {User} from './models/user.model';
+import {UsersService} from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,8 @@ import {DentistService} from './services/dentist.service';
 export class AppComponent implements OnInit {
   title = 'dentalstudio';
 
-  constructor(private patientService: PatientService,
-              private dentistService: DentistService) {
+  constructor(private apiService: ApiService,
+              private usersService: UsersService) {
   }
 
   ngOnInit() {
@@ -28,12 +29,12 @@ export class AppComponent implements OnInit {
     //   .catch((error) => {
     //     console.log(error);
     //   });
-
-    this.dentistService.addCollection(this.patientService.mockPatients.concat(this.dentistService.mockDentists))
-      .then((items) => {
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.apiService.getMockUsers().subscribe((users: User[]) => {
+      this.usersService.addCollection(users)
+        .then(() => {})
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 }

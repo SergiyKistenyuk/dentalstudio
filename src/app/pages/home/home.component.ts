@@ -18,4 +18,8 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.localStorageService.get('currentUser');
   }
+
+  onUserLoggedOut() {
+    this.currentUser = null;
+  }
 }

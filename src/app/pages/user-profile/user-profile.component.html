@@ -1,5 +1,7 @@
 <div class="wrapper">
-  <app-user-data (userDataFormReady)="onUserProfileFormReady($event)">
+  <app-user-data [user]="user"
+                 (userDataFormReady)="onUserProfileFormReady($event)"
+  >
   </app-user-data>
 
   <div id="save-btn-block">

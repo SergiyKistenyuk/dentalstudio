@@ -22,6 +22,9 @@ export abstract class BaseDataService<T extends BaseModel> {
   getObject(objectId: number): Promise<T> {
     return this.dataProviderService.getObject(this.tableName, objectId);
   }
+  getObjectByParam(param: string, value: any): Promise<T> {
+    return this.dataProviderService.getObjectByParam(this.tableName, param, value);
+  }
   getItems(): Promise<T[]> {
     return this.dataProviderService.getItems(this.tableName);
   }

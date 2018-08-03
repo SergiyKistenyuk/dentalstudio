@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../models/user.model';
 import {MatSnackBar} from '@angular/material';
-import {DentistService} from '../../services/dentist.service';
 import {Router} from '@angular/router';
 import {LocalStorageService} from '../../services/local-storage.service';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, Validators} from '@angular/forms';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +16,7 @@ export class UserProfileComponent implements OnInit {
   userProfileFormGroup: FormGroup;
   user: User;
 
-  constructor(private patientService: DentistService,
+  constructor(private usersService: UsersService,
               private localStorageService: LocalStorageService,
               private router: Router,
               public snackBar: MatSnackBar) {
@@ -24,17 +24,16 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.localStorageService.get('currentUser');
-    debugger;
   }
 
   onSave() {
-    debugger;
-    this.patientService.updateObject(<User>this.userProfileFormGroup.value)
+    const newUser = <User>Object.assign({}, this.userProfileFormGroup.value, {id: this.user.id});
+    this.usersService.updateObject(newUser)
       .then((user: User) => {
         if (user.id) {
           this.snackBar.open('User data was successfully updated!', '', {duration: 2000});
+          this.localStorageService.removeItem('currentUser');
           this.localStorageService.set('currentUser', user);
-          this.router.navigate(['/']);
         }
       })
       .catch((error) => {

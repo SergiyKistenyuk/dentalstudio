@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 
 import {BaseDataService} from './base.service';
 import {IndexedDbService} from './indexed-DB.service';
-import {Admin} from '../models/admin.model';
+import {User} from '../models/user.model';
 
 @Injectable()
-export class AdminService extends BaseDataService<Admin> {
+export class UsersService extends BaseDataService<User> {
   constructor(protected dataProviderService: IndexedDbService) {
     super('users', dataProviderService);
   }
 }
+

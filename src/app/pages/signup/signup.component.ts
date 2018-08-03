@@ -2,10 +2,11 @@ import {Component, OnInit} from '@angular/core';
 
 import {User} from '../../models/user.model';
 import {FormGroup} from '@angular/forms';
-import {DentistService} from '../../services/dentist.service';
 import {MatSnackBar} from '@angular/material';
 import {LocalStorageService} from '../../services/local-storage.service';
 import {Router} from '@angular/router';
+import {UsersService} from '../../services/users.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,23 +17,19 @@ export class SignupComponent implements OnInit {
 
   signupFormGroup: FormGroup;
 
-  constructor(private patientService: DentistService,
+  constructor(private usersService: UsersService,
               private localStorageService: LocalStorageService,
               private router: Router,
-              public snackBar: MatSnackBar) {
+              private authService: AuthService) {
   }
 
   ngOnInit() {
   }
 
   onSignup() {
-    this.patientService.addObject(<User>this.signupFormGroup.value)
+    this.authService.signup(<User>this.signupFormGroup.value)
       .then((user: User) => {
-        if (user.id) {
-          this.snackBar.open('User data was successfully saved!', '', {duration: 2000});
-          this.localStorageService.set('currentUser', user);
-          this.router.navigate(['/']);
-        }
+        this.router.navigate(['/']);
       })
       .catch((error) => {
         console.log(error);

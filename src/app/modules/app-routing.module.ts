@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 import {HomeComponent} from '../pages/home/home.component';
-import {PageNotFoundComponent} from '../pages/page-not-found/page-not-found.component';
 import {UserProfileComponent} from '../pages/user-profile/user-profile.component';
+import {VisitAdministrationComponent} from '../pages/visit-administration/visit-administration.component';
+import {DentistAuthGuard} from '../shared/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: '',  component: HomeComponent, pathMatch: 'full'},
-  { path: 'profile',  component: UserProfileComponent, pathMatch: 'full'}/*,
-  { path: '**', component: PageNotFoundComponent }*/
+  { path: 'profile',  component: UserProfileComponent, pathMatch: 'full'},
+  { path: 'visitadmin', component: VisitAdministrationComponent, canActivate: [DentistAuthGuard] }
 ];
 
 @NgModule({

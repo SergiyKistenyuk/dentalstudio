@@ -7,6 +7,7 @@ export interface IDataProviderService {
   clear(name): Promise<any>;
   addCollection(name, records): Promise<any>;
   getObject(name, objectId): Promise<any>;
+  getObjectByParam(name, param, value): Promise<any>;
   getItems(name: string): Promise<any[]>;
   updateObject(name, object): Promise<any>;
   deleteObject(name, object): Promise<any>;
@@ -129,6 +130,29 @@ export class IndexedDbService implements IDataProviderService {
     });
   }
 
+  public getObjectByParam(name, param, value): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.performOperationWithStore(name, function (tx, store) {
+        const cursorRequest = store.openCursor();
+        let result = {};
+        cursorRequest.onerror = function (error) {
+          reject(error);
+        };
+        cursorRequest.onsuccess = function (evt) {
+          const cursor = evt.target.result;
+          if (cursor) {
+            if (cursor.value.obj[param] === value) {
+              result = cursor.value.obj;
+            }
+            cursor.continue();
+          } else {
+            resolve(result);
+          }
+        };
+      });
+    });
+  }
+
   public getItems(name: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
       this.performOperationWithStore(name, function (tx, store) {
@@ -178,15 +202,6 @@ export class IndexedDbService implements IDataProviderService {
         };
         cursorRequest.onsuccess = function (evt) {
           const cursor = evt.target.result;
-          /*
-          if (cursor) {
-            lastId = cursor.key + 1;
-            cursor.continue();
-          }
-          object.id = lastId;
-          store.put({ id: object.id, obj: object });
-          resolve(object);
-          */
           if (cursor) {
             if (cursor.key > lastId) {
               lastId = cursor.key;
@@ -196,7 +211,7 @@ export class IndexedDbService implements IDataProviderService {
             object.id = ++lastId;
             store.put({ id: object.id, obj: object });
             resolve(object);
-            resolve(lastId);
+            // resolve(lastId);
           }
         };
       });

@@ -1,23 +1,16 @@
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
 import {User} from '../models/user.model';
-// import { Store } from '@ngrx/store';
-//
-// import * as fromApp from '../store/app.reducers';
-// import * as fromAuth from './store/auth.reducers';
+import {LocalStorageService} from '../services/local-storage.service';
+import {Roles} from '../models/roles.model';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class DentistAuthGuard implements CanActivate {
 
-  constructor(/*private store: Store<fromApp.AppState>*/) {}
+  constructor(private localStorageService: LocalStorageService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return true;
-    // return this.store.select('auth')
-    //   .take(1)
-    //   .map((authState: fromAuth.State) => {
-    //   return authState.authenticated;
-    // });
+    const user = <User>this.localStorageService.get('currentUser');
+    return user.role === Roles.DENTIST;
   }
 }

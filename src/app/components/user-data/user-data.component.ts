@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {Dentist} from '../../models/dentist.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Roles} from '../../models/roles.model';
-import {PatientService} from '../../services/patient.service';
 import {User} from '../../models/user.model';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-user-data',
@@ -12,6 +12,8 @@ import {User} from '../../models/user.model';
   styleUrls: ['./user-data.component.scss']
 })
 export class UserDataComponent implements OnInit {
+
+  @Input() user: User;
 
   @Output() userDataFormReady = new EventEmitter<FormGroup>();
 
@@ -22,7 +24,7 @@ export class UserDataComponent implements OnInit {
   dentists: Dentist[];
 
   constructor(private formBuilder: FormBuilder,
-              private patientService: PatientService) {
+              private usersService: UsersService) {
     this.userDataFormGroup = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -40,7 +42,7 @@ export class UserDataComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.patientService.getItems()
+      this.usersService.getItems()
         .then((users: User[]) => {
           this.dentists = users.filter((user: User) => {
             return user.role === this.Roles.DENTIST;
@@ -50,6 +52,22 @@ export class UserDataComponent implements OnInit {
           console.log(error);
         });
     }, 0);
+
+    if (this.user) {
+      this.userDataFormGroup.controls['firstName'].setValue(this.user.firstName);
+      this.userDataFormGroup.controls['firstName'].updateValueAndValidity();
+      this.userDataFormGroup.controls['lastName'].setValue(this.user.lastName);
+      this.userDataFormGroup.controls['email'].setValue(this.user.email);
+      this.userDataFormGroup.controls['phone'].setValue(this.user.phone);
+      this.userDataFormGroup.controls['password'].setValue(this.user.password);
+      this.userDataFormGroup.controls['role'].setValue(this.user.role);
+      this.userDataFormGroup.controls['dentist'].setValue(this.user.currentDentistId);
+      this.userDataFormGroup.controls['workExperience'].setValue(this.user.workExperience);
+      this.userDataFormGroup.controls['awards'].setValue(this.user.awards);
+      this.userDataFormGroup.controls['skills'].setValue(this.user.skills);
+      this.userDataFormGroup.controls['birthDate'].setValue(this.user.birthDay);
+      this.userDataFormGroup.controls['lastName'].setValue(this.user.lastName);
+    }
 
     this.userDataFormReady.next(this.userDataFormGroup);
   }

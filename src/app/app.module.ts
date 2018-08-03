@@ -14,14 +14,13 @@ import {HomeComponent} from './pages/home/home.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {AuthModule} from './modules/auth.module';
 import {IndexedDbService} from './services/indexed-DB.service';
-import {PatientService} from './services/patient.service';
-import {DentistService} from './services/dentist.service';
-import {NurseService} from './services/nurse.service';
-import {AdminService} from './services/admin.service';
 import {LocalStorageService} from './services/local-storage.service';
-import { UserDataComponent } from './components/user-data/user-data.component';
-import { UserProfileComponent } from './pages/user-profile/user-profile.component';
-import { UserMenuComponent } from './components/user-menu/user-menu.component';
+import {UserDataComponent} from './components/user-data/user-data.component';
+import {UserProfileComponent} from './pages/user-profile/user-profile.component';
+import {UserMenuComponent} from './components/user-menu/user-menu.component';
+import {ApiService} from './services/api.service';
+import {UsersService} from './services/users.service';
+import { VisitAdministrationComponent } from './pages/visit-administration/visit-administration.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,8 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
     MainMenuComponent,
     PageNotFoundComponent,
     UserProfileComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    VisitAdministrationComponent
   ],
   imports: [
     BrowserModule,
@@ -49,11 +49,9 @@ import { UserMenuComponent } from './components/user-menu/user-menu.component';
   ],
   providers: [
     IndexedDbService,
-    PatientService,
-    DentistService,
-    NurseService,
-    AdminService,
-    LocalStorageService
+    UsersService,
+    LocalStorageService,
+    ApiService
   ],
   bootstrap: [AppComponent]
 })

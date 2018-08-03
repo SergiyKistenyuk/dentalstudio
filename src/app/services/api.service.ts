@@ -10,7 +10,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   public getMockUsers(): Observable<User[] | {}> {
-    return this.http.get<User[]>('http://localhost:8000/assets/mock-users.json')
+    return this.http.get<User[]>('http://localhost:4200/assets/mock-users.json')
       .pipe(
         map((users: User[]) => {
           return users;

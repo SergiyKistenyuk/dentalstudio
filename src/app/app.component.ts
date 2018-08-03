@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     //   });
     this.apiService.getMockUsers().subscribe((users: User[]) => {
       this.usersService.addCollection(users)
-        .then(() => {})
+        .then((item) => {})
         .catch((error) => {
           console.log(error);
         });
